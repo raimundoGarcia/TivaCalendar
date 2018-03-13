@@ -2,13 +2,13 @@
     "items": [ 
         {
             "year": 2018,
-            "month": 3,
-            "day": 13,
+            "month": "03",
+            "day": "08",
             "duration": 3,
             "name": "prueba",
             "id": "123456",
             "color": "5",
-            "_data":"hola"
+           "description":"wowlolololasdfadsfasdfasdf"
         },
           {
             "year": 2018,
