@@ -207,8 +207,17 @@ function createCalendar(layout, firstDay, numbDays, monthNum, yearNum) {
                                     } else if (!events[t].first_day && !events[t].last_day) {
                                         event_class = "middle-day";
                                     }
-
-                                    calendarString += '<div class=\"calendar-event-name ' + event_class + ' color-' + color + '\" id=\"' + events[t].id + '\" onmouseover=\"showTooltip(' + events[t].id + ', \'full\', ' + daycounter + ', ' + monthNum + ', ' + yearNum + ', this)\" onmouseout=\"clearTooltip(\'full\', this)\" onclick=\"showEventDetail(' + events[t].id + ', \'full\', ' + daycounter + ', ' + monthNum + ', ' + yearNum + ')\"><span class="event-name">' + getShortText(events[t].name, 2) + '</span><\/div>';
+                             var largo_span = 2;
+                             if ( event_class ==="first-day"){
+                                 largo_span = 2* tiva_events[t].duration;
+                             }
+                                    
+                                    calendarString += '<div class=\"calendar-event-name ' + event_class + ' color-' + color + '\" id=\"' + events[t].id + 
+                                            '\" onmouseover=\"showTooltip(' + events[t].id + ', \'full\', ' + daycounter + ', ' + monthNum + ', ' + yearNum + 
+                                            ', this)\" onmouseout=\"clearTooltip(\'full\', this)\" onclick=\"showEventDetail(' + events[t].id + ', \'full\', ' + 
+                                            daycounter + ', ' + monthNum + ', ' + yearNum + ')\"><span class="event-name"  >' + getShortText(events[t].name,largo_span) + 
+                                            '</span><\/div>';
+                                           
                                 } else {
                                     var event_fake;
                                     if (typeof events[t + 1] != "undefined") {
@@ -836,11 +845,11 @@ jQuery(document).ready(function () {
                         "color": color,
                         "day": entrada.FechaInicio.substring(8,10),
                         "description":  entrada.Asunto,
-                        "duration": "1",
+                        "duration":j + 1,
                         "image": "./events/images/corrido_fest_2016.jpg",
                         "location": entrada.Detalles.Direccion,
                         "month": entrada.FechaInicio.substring(5,7),
-                        "name": entrada.Destino,
+                        "name": entrada.Asunto,
                         "time": timeTo12HrFormat(entrada.FechaInicio.substring(11,16)),
                         "year": entrada.FechaInicio.substring(0,4)       
                     };
@@ -848,19 +857,24 @@ jQuery(document).ready(function () {
                     if (!evento.duration){
                         evento.duration=1;
                     }
-                    evento.id=  j;
+                  //  evento.id=  j;
                     var event_date= new Date(evento.year,Number(evento.month) -1,evento.day,entrada.FechaInicio.substring(11,13),entrada.FechaInicio.substring(14,16));
-                    console.log(event_date);
+                    
                   
                     
                     evento.date = event_date.getTime();
-                    console.log(evento.date);
+                   
                     tiva_events.push(evento);
                 });
                 console.log(tiva_events);
-                tiva_events.sort(sortEventsByDate);
-                console.log(sortEventsByDate);
-                console.log(tiva_events);
+          
+               console.log(tiva_events);
+             tiva_events.sort(sortEventsByDate);
+                   for (var i = 0; i < tiva_events.length; i++) {
+                    tiva_events[i].id= i;
+            }
+               
+                
 //				for (var i = 0; i < data.length; i++) {
 //					var event_date = new Date(data[i].year, Number(data[i].month) - 1, data[i].day);
 //					data[i].date = event_date.getTime();

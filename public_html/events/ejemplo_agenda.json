@@ -2,8 +2,8 @@
    
         {
             "Pedido": "P1-8/1900",
-            "FechaInicio": "2018-04-28T12:30:00+02:00",
-            "FechaFin": "2018-05-01T12:00:00+02:00",
+            "FechaInicio": "2018-09-24T12:30:00+02:00",
+            "FechaFin": "2018-03-01T12:00:00+02:00",
             "Tipo": "HT",
             "Destino": "Valencia",
             "Asunto":"Reserva de Hotel Valencia",
@@ -43,11 +43,11 @@
         },
         {
             "Pedido": "P1-8/1900",
-            "FechaInicio": "2018-04-28T10:00:00+02:00",
-            "FechaFin": "2018-04-28T11:00:00+02:00",
+            "FechaInicio": "2018-09-30T10:00:00+02:00",
+            "FechaFin": "2018-03-28T11:00:00+02:00",
             "Tipo": "AV",
             "Destino": "Valencia",
-            "Asunto":"Reserva de vuelo Valencia",
+            "Asunto":"Reserva de vuelo VLC-CDG",
             "viajeros": [
                 {
                     "id": "18000",
@@ -85,5 +85,141 @@
                     }
                 ]
             }
+        },
+            {
+            "Pedido": "P1-80/1900",
+            "FechaInicio": "2018-09-24T11:00:00+02:00",
+            "FechaFin": "2018-03-28T11:00:00+02:00",
+            "Tipo": "RC",
+            "Destino": "Denia",
+            "Asunto":"Reserva de coche Valencia",
+            "viajeros": [
+                {
+                    "id": "18000",
+                    "nombre": "Nombre y Apellidos 1"
+                }
+            ],
+            "Detalles": {
+                "Compañia": "Iberia",
+                "latitud": "3.45678",
+                "longitud": "-0.23456",
+                "Direccion": "Avda. del puerto, 34 46001 Valencia España",
+                "Localizador": "ZYFGRD",
+                "Tramos": [
+                    {
+                        "Salida": "Madrid",
+                        "Llegada": "Palma de Mallorca"
+                    },
+                    {
+                        "Salida": "Palma de Mallorca",
+                        "Llegada": "Valencia"
+                    }
+                ],
+                "Adjuntos": [
+                    {
+                        "id": "20002",
+                        "Nombre": "Nombre del archivo.pdf",
+                        "tipo": "pdf",
+                        "contenido": "ssssssssssssssssssssssssssssssssssssssss"
+                    },
+                    {
+                        "id": "20003",
+                        "Nombre": "Nombre del archivo1.pdf",
+                        "tipo": "pdf",
+                        "contenido": "ssssssssssssssssssssssssssssssssssssssss"
+                    }
+                ]
+            }
+        },
+         {
+            "Pedido": "P1-99/1900",
+            "FechaInicio": "2018-09-24T23:00:00+02:00",
+            "FechaFin": "2018-03-28T11:00:00+02:00",
+            "Tipo": "AV",
+            "Destino": "Salamanca",
+            "Asunto":"Reserva de vuelo Salamanca",
+            "viajeros": [
+                {
+                    "id": "18000",
+                    "nombre": "Nombre y Apellidos 1"
+                }
+            ],
+            "Detalles": {
+                "Compañia": "Iberia",
+                "latitud": "3.45678",
+                "longitud": "-0.23456",
+                "Direccion": "Avda. del puerto, 34 46001 Valencia España",
+                "Localizador": "ZYFGRD",
+                "Tramos": [
+                    {
+                        "Salida": "Madrid",
+                        "Llegada": "Palma de Mallorca"
+                    },
+                    {
+                        "Salida": "Palma de Mallorca",
+                        "Llegada": "Valencia"
+                    }
+                ],
+                "Adjuntos": [
+                    {
+                        "id": "20002",
+                        "Nombre": "Nombre del archivo.pdf",
+                        "tipo": "pdf",
+                        "contenido": "ssssssssssssssssssssssssssssssssssssssss"
+                    },
+                    {
+                        "id": "20003",
+                        "Nombre": "Nombre del archivo1.pdf",
+                        "tipo": "pdf",
+                        "contenido": "ssssssssssssssssssssssssssssssssssssssss"
+                    }
+                ]
+            }
+        },
+            {
+            "Pedido": "P2-30/1900",
+            "FechaInicio": "2018-09-24T18:00:00+02:00",
+            "FechaFin": "2018-03-28T11:00:00+02:00",
+            "Tipo": "AV",
+            "Destino": "Tarragona",
+            "Asunto":"Reserva de vuelo Tarragona adfasdf adfasd fasdfa sdfasd fasdfa sdfasdfa sdddddddd ddddddddddddddddddddd ddddddddddddddddddddddddddddddddddddddddddddddddd",
+            "viajeros": [
+                {
+                    "id": "18000",
+                    "nombre": "Nombre y Apellidos 1"
+                }
+            ],
+            "Detalles": {
+                "Compañia": "Iberia",
+                "latitud": "3.45678",
+                "longitud": "-0.23456",
+                "Direccion": "Avda. del puerto, 34 46001 Valencia España",
+                "Localizador": "ZYFGRD",
+                "Tramos": [
+                    {
+                        "Salida": "Madrid",
+                        "Llegada": "Palma de Mallorca"
+                    },
+                    {
+                        "Salida": "Palma de Mallorca",
+                        "Llegada": "Valencia"
+                    }
+                ],
+                "Adjuntos": [
+                    {
+                        "id": "20002",
+                        "Nombre": "Nombre del archivo.pdf",
+                        "tipo": "pdf",
+                        "contenido": "ssssssssssssssssssssssssssssssssssssssss"
+                    },
+                    {
+                        "id": "20003",
+                        "Nombre": "Nombre del archivo1.pdf",
+                        "tipo": "pdf",
+                        "contenido": "ssssssssssssssssssssssssssssssssssssssss"
+                    }
+                ]
+            }
         }
+        
 ]
