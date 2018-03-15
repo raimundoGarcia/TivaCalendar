@@ -63,6 +63,7 @@
 }
 .tiva-calendar-full .calendar-table tr th, .tiva-calendar-full .calendar-table tr td {
     width: 14.285714285714285%;
+
 }
 .tiva-calendar-full .calendar-day-blank {
     background: #f6f6f6;
@@ -87,13 +88,15 @@
     background: #567BD2;
     font-size: 11px;
     margin-top: 5px;
-    text-align: center;
+    text-align: left;
+
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
     line-height: 20px;
     padding: 0 3px;
     cursor: pointer;
+    padding-left: 3vw;
 }
 .tiva-calendar-full .calendar-event-name span {
     color: #ffffff;
@@ -126,9 +129,78 @@
     border-bottom-right-radius: 0;
     /*    pruebas*/
     position:relative;
-   width: 200%;
- max-width: 200%;
+
     z-index: 2;
+}
+/*-------------------- DIVS LENGTH  -----------------------*/
+.length-1 {
+    width:100%;
+}
+.length-2 {
+    width:200%;
+}
+.length-3 {
+    width:300%;
+}
+.length-4 {
+    width:400%;
+}
+.length-5 {
+    width:500%;
+}
+.length-6 {
+    width:600%;
+}
+.length-7 {
+    width:700%;
+}
+
+.maxlength-1 {
+    max-width:100%;
+}
+.maxlength-2 {
+    max-width: 170%;
+}
+.maxlength-3 {
+    max-width: 250%; 
+}
+.maxlength-4 {
+    max-width:350%; 
+}
+.maxlength-5 {
+    max-width: 450%; 
+}
+.first-day .maxlength-6 {
+    max-width: 550%;
+}
+.first-day .maxlength-7 {
+    max-width: 650%; 
+}
+@media (max-width:700px){
+    .maxlength-1 {
+        max-width:100%;
+    }
+    .maxlength-2 {
+        max-width: 130%;
+    }
+    .maxlength-3 {
+        max-width: 200%; 
+    }
+    .maxlength-4 {
+        max-width:300%; 
+    }
+    .maxlength-5 {
+        max-width: 400%; 
+    }
+    .first-day .maxlength-6 {
+        max-width: 500%;
+    }
+    .first-day .maxlength-7 {
+        max-width: 600%; 
+    }
+    body{
+       
+    }
 }
 
 .tiva-calendar-full .calendar-event-name.middle-day {
@@ -140,7 +212,7 @@
 }
 .tiva-calendar-full .calendar-event-name.middle-day span {
     opacity: 0;	
-  
+
 }
 .tiva-calendar-full .calendar-event-name.last-day {
     margin-left: -11px;
@@ -153,7 +225,7 @@
 }
 .tiva-calendar-full .calendar-event-name.last-day span {
     opacity: 0;	
-   
+
 }
 
 /* Event list */
@@ -295,7 +367,16 @@
     }
 }
 .span13{
-    width: 90vw !important;
+    width: 80vw !important;
     height: 100vh;
-    
+}
+@media (max-width:900px){
+    .span13{
+        width: 90vw;
+    }
+}
+@media (max-width:700px){
+    .span13{
+        width: 100vw;
+    }
 }

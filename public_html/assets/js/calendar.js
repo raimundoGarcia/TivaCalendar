@@ -26,12 +26,26 @@ var order_num = 0;
 var wordDay;
 var date_start;
 
+
 function getShortText(text, num) {
     if (text) {
+
+        var ancho = $(window).width();
+        switch (true) {
+            case (ancho < 600):
+                num = Math.floor(num / 3);
+                if (num === 0) {
+                    num = 1;
+                }
+                break;
+            case (ancho > 600 && ancho < 900):
+                num = Math.ceil(num / 2);
+                break;
+        }
         // Get num of word
         var textArray = text.split(" ");
         if (textArray.length > num) {
-            return textArray.slice(0, num).join(" ") + " ...";
+            return textArray.slice(0, num).join(" ") + "...";
         }
         return text;
     }
@@ -46,6 +60,7 @@ function sortEventsByDate(a, b) {
     } else {
         return 0;
     }
+
 }
 
 function sortEventsByUpcoming(a, b) {
@@ -158,10 +173,12 @@ function createCalendar(layout, firstDay, numbDays, monthNum, yearNum) {
     for (var i = 1; i <= 6; i++) {
         var k = (i - 1) * 7 + 1;
         if (k < (firstDay + numbDays)) {
+
             calendarString += '<tr>';
             for (var x = 1; x <= 7; x++) {
                 daycounter = (thisDate - firstDay) + 1;
                 thisDate++;
+
                 if ((daycounter > numbDays) || (daycounter < 1)) {
                     calendarString += '<td class=\"calendar-day-blank\">&nbsp;<\/td>';
                 } else {
@@ -175,8 +192,10 @@ function createCalendar(layout, firstDay, numbDays, monthNum, yearNum) {
                     } else {
                         if ((x == 6) || (x == 7)) {
                             daycounter_s = '<span class=\"calendar-day-weekend\">' + daycounter + '</span>';
+
                         } else {
                             daycounter_s = daycounter;
+
                         }
                     }
 
@@ -207,17 +226,92 @@ function createCalendar(layout, firstDay, numbDays, monthNum, yearNum) {
                                     } else if (!events[t].first_day && !events[t].last_day) {
                                         event_class = "middle-day";
                                     }
-                             var largo_span = 2;
-                             if ( event_class ==="first-day"){
-                                 largo_span = 2* tiva_events[t].duration;
-                             }
+
+                                    var palabrasSegunDuracion = 2;
+                                    var divSize = " length-1 ";
+                                    var divMaxSegunDiaSemana = 2;
+                                    var maxDiv = " maxlength-1 ";
+                                    switch (event_class) {
+                                        case "one-day":
+                                            divSize = "";
+                                            maxDiv = "";
+                                            palabrasSegunDuracion = 2;
+                                            divMaxSegunDiaSemana = 2;
+                                            break;
+                                        case "middle-day":
+                                            divSize = "";
+                                            maxDiv = "";
+                                            palabrasSegunDuracion = 1;
+                                            divMaxSegunDiaSemana = 1;
+                                            break;
+                                        case "last-day":
+                                            divSize = "";
+                                            maxDiv = "";
+                                            palabrasSegunDuracion = 1;
+                                            divMaxSegunDiaSemana = 1;
+                                            break;
+                                        case "first-day":
+                                            // Delimita el máximo de palabras que puede mostrar un evento y el tamaño del div, según la duración del evento
+                                            duracion = tiva_events[t].duration;
+                                            palabrasSegunDuracion = 2 * duracion;
+
+                                            divSize = " length-" + duracion;
+                                            if (duracion > 7) {
+                                                divSize = " length-7 ";
+                                            }
+                                            // Delimita el máximo de palabras que puede mostrar un evento y el tamaño del div, según en que  día de la semana comience  
+
+                                            switch (wordDay[x - 1]) {
+                                                case "Lunes":
+                                                    divMaxSegunDiaSemana = 14;
+                                                    maxDiv = 7;
+                                                    break;
+                                                case "Martes":
+                                                    divMaxSegunDiaSemana = 12;
+                                                    maxDiv = 6;
+                                                    break;
+                                                case "Miercoles":
+                                                    divMaxSegunDiaSemana = 10;
+                                                    maxDiv = 5;
+                                                    break;
+                                                case "Jueves":
+                                                    divMaxSegunDiaSemana = 8;
+                                                    maxDiv = 4;
+                                                    break;
+                                                case "Viernes":
+                                                    divMaxSegunDiaSemana = 6;
+                                                    maxDiv = 3;
+                                                    break;
+                                                case "Sabado":
+                                                    divMaxSegunDiaSemana = 4;
+                                                    maxDiv = 2;
+                                                    break;
+                                                case "Domingo":
+                                                    divMaxSegunDiaSemana = 2;
+                                                    maxDiv =1;
+                                                    break;
+                                            }
+                                             maxDiv = " maxlength-" +Math.min(duracion,maxDiv);
+                                            break;
+
+                                    }
+
+
+
+
+                                    // selecciona el numero menor de palabras teniendo en cuenta el tamaño del div, y el dia de la semana
+                                    var palabrasEvento = Math.min(palabrasSegunDuracion, divMaxSegunDiaSemana);
+                                   
                                     
-                                    calendarString += '<div class=\"calendar-event-name ' + event_class + ' color-' + color + '\" id=\"' + events[t].id + 
-                                            '\" onmouseover=\"showTooltip(' + events[t].id + ', \'full\', ' + daycounter + ', ' + monthNum + ', ' + yearNum + 
-                                            ', this)\" onmouseout=\"clearTooltip(\'full\', this)\" onclick=\"showEventDetail(' + events[t].id + ', \'full\', ' + 
-                                            daycounter + ', ' + monthNum + ', ' + yearNum + ')\"><span class="event-name"  >' + getShortText(events[t].name,largo_span) + 
+
+
+                                    calendarString += '<div class=\"calendar-event-name ' + event_class + maxDiv + divSize + ' color-' + color + '\" id=\"' + events[t].id +
+                                            '\" onmouseover=\"showTooltip(' + events[t].id + ', \'full\', ' + daycounter + ', ' + monthNum + ', ' + yearNum +
+                                            ', this)\" onmouseout=\"clearTooltip(\'full\', this)\" onclick=\"showEventDetail(' + events[t].id + ', \'full\', ' +
+                                            daycounter + ', ' + monthNum + ', ' + yearNum + ')\"><span class="event-name"  >' + getShortText(events[t].name, palabrasEvento) +
                                             '</span><\/div>';
-                                           
+
+
                                 } else {
                                     var event_fake;
                                     if (typeof events[t + 1] != "undefined") {
@@ -703,7 +797,7 @@ function showEventDetail(id, layout, day, month, year) {
     }
 }
 function timeTo12HrFormat(time) //convierte el formato de 24 horas, en formato de 12 horas AM y PM
-{   
+{
     var time_part_array = time.split(":");
     var ampm = 'AM';
 
@@ -712,12 +806,38 @@ function timeTo12HrFormat(time) //convierte el formato de 24 horas, en formato d
     }
 
     if (time_part_array[0] > 12) {
-        time_part_array[0] = time_part_array[0] - 12 ;// el +2 es por la franja horaria, 
+        time_part_array[0] = time_part_array[0] - 12;// el +2 es por la franja horaria, 
     }
 
     formatted_time = time_part_array[0] + ':' + time_part_array[1] + ' ' + ampm;
 
     return formatted_time;
+}
+function dayDifference(entrada, salida) {
+    var inicio = entrada.substring(0, 10);
+    var fin = salida.substring(0, 10);
+    // First we split the values to arrays date1[0] is the year, [1] the month and [2] the day
+    date1 = inicio.split('-');
+    date2 = fin.split('-');
+
+// Now we convert the array to a Date object, which has several helpful methods
+    date1 = new Date(date1[0], date1[1], date1[2]);
+    date2 = new Date(date2[0], date2[1], date2[2]);
+
+// We use the getTime() method and get the unixtime (in milliseconds, but we want seconds, therefore we divide it through 1000)
+    date1_unixtime = parseInt(date1.getTime() / 1000);
+    date2_unixtime = parseInt(date2.getTime() / 1000);
+
+// This is the calculated difference in seconds
+    var timeDifference = date2_unixtime - date1_unixtime;
+
+// in Hours
+    var timeDifferenceInHours = timeDifference / 60 / 60;
+
+// and finaly, in days :)
+    var timeDifferenceInDays = timeDifferenceInHours / 24;
+    return timeDifferenceInDays;
+    console.log(timeDifferenceInDays);
 }
 
 jQuery(document).ready(function () {
@@ -781,100 +901,64 @@ jQuery(document).ready(function () {
 
     }
 
-    // Get events from json file or ajax php
-//    var source = (typeof jQuery('.tiva-events-calendar').attr('data-source') != "undefined") ? jQuery('.tiva-events-calendar').attr('data-source') : 'json';
-//    if (source == 'json') { // Get events from json file : events/events.json
-//        jQuery.getJSON(events_json, function (data) {
-//            for (var i = 0; i < data.items.length; i++) {
-//                var event_date = new Date(data.items[i].year, Number(data.items[i].month) - 1, data.items[i].day);
-//                data.items[i].date = event_date.getTime();
-//
-//                tiva_events.push(data.items[i]);
-//
-//            }
-//            console.log(tiva_events);
-//            // Sort events by date
-//            tiva_events.sort(sortEventsByDate);
-//
-//            for (var j = 0; j < tiva_events.length; j++) {
-//                tiva_events[j].id = j;
-//                if (!tiva_events[j].duration) {
-//                    tiva_events[j].duration = 1;
-//                }
-//            }
-//
-//            // Create calendar
-//            changedate('current', 'full');
-//            changedate('current', 'compact');
-//
-//            jQuery('.tiva-events-calendar').each(function (index) {
-//                // Initial view
-//                var initial_view = (typeof jQuery(this).attr('data-view') != "undefined") ? jQuery(this).attr('data-view') : 'calendar';
-//                if (initial_view == 'list') {
-//                    jQuery(this).find('.list-view').click();
-//                }
-//            });
-//        });
-//    } else { // Get events from php file via ajax
-        jQuery.ajax({
-            url:  "./events/ejemplo_agenda.json",
-            dataType: 'json',
-            beforeSend: function () {
-                jQuery('.tiva-calendar').html('<div class="loading"><img src="assets/images/loading.gif" /></div>');
-            },
-            success: function (entradas) {
-                j= -1; //contador para asignar las IP a los eventos
-                entradas.forEach(entrada => {
-                 j++;
-                 var color= "1";
-                    tipo = entrada.Tipo;
-                    switch (tipo){
-                        case "AV":
-                            color = "1";
-                            break;
-                        case "HT":
-                            color = "2";
-                            break;
-                        default:
-                            color= "3";
-                            break;
-                            
-                    }
-                    evento = {
-                        
-                        "color": color,
-                        "day": entrada.FechaInicio.substring(8,10),
-                        "description":  entrada.Asunto,
-                        "duration":j + 1,
-                        "image": "./events/images/corrido_fest_2016.jpg",
-                        "location": entrada.Detalles.Direccion,
-                        "month": entrada.FechaInicio.substring(5,7),
-                        "name": entrada.Asunto,
-                        "time": timeTo12HrFormat(entrada.FechaInicio.substring(11,16)),
-                        "year": entrada.FechaInicio.substring(0,4)       
-                    };
-                    console.log(evento);
-                    if (!evento.duration){
-                        evento.duration=1;
-                    }
-                  //  evento.id=  j;
-                    var event_date= new Date(evento.year,Number(evento.month) -1,evento.day,entrada.FechaInicio.substring(11,13),entrada.FechaInicio.substring(14,16));
-                    
-                  
-                    
-                    evento.date = event_date.getTime();
-                   
-                    tiva_events.push(evento);
-                });
-                console.log(tiva_events);
-          
-               console.log(tiva_events);
-             tiva_events.sort(sortEventsByDate);
-                   for (var i = 0; i < tiva_events.length; i++) {
-                    tiva_events[i].id= i;
+    jQuery.ajax({
+        url: "./events/ejemplo_agenda.json",
+        dataType: 'json',
+        beforeSend: function () {
+            jQuery('.tiva-calendar').html('<div class="loading"><img src="assets/images/loading.gif" /></div>');
+        },
+        success: function (entradas) {
+            j = -1; //contador para asignar las IP a los eventos
+            entradas.forEach(entrada => {
+                j++;
+                var color = "1";
+                tipo = entrada.Tipo;
+                // Asigna un color a cada evento, dependiendo del tipo de evento 
+                switch (tipo) {
+                    case "AV":
+                        color = "1";
+                        break;
+                    case "HT":
+                        color = "2";
+                        break;
+                    default:
+                        color = "3";
+                        break;
+
+                }
+                evento = {
+
+                    "color": color,
+                    "day": entrada.FechaInicio.substring(8, 10),
+                    "description": entrada.Asunto,
+                    "duration": dayDifference(entrada.FechaInicio,entrada.FechaFin),
+                    "image": "./events/images/corrido_fest_2016.jpg",
+                    "location": entrada.Detalles.Direccion,
+                    "month": entrada.FechaInicio.substring(5, 7),
+                    "name": entrada.Asunto,
+                    "time": timeTo12HrFormat(entrada.FechaInicio.substring(11, 16)),
+                    "year": entrada.FechaInicio.substring(0, 4)
+                };
+
+                if (!evento.duration) {
+                    evento.duration = 1;
+                }
+                //  evento.id=  j;
+                var event_date = new Date(evento.year, Number(evento.month) - 1, evento.day, entrada.FechaInicio.substring(11, 13), entrada.FechaInicio.substring(14, 16));
+
+
+
+                evento.date = event_date.getTime();
+
+                tiva_events.push(evento);
+            });
+
+            tiva_events.sort(sortEventsByDate);
+            for (var i = 0; i < tiva_events.length; i++) {
+                tiva_events[i].id = i;
             }
-               
-                
+
+
 //				for (var i = 0; i < data.length; i++) {
 //					var event_date = new Date(data[i].year, Number(data[i].month) - 1, data[i].day);
 //					data[i].date = event_date.getTime();
@@ -891,19 +975,19 @@ jQuery(document).ready(function () {
 //					}
 //				}
 //						
-				// Create calendar
-				changedate('current', 'full');
-				changedate('current', 'compact');
-				
-				jQuery('.tiva-events-calendar').each(function(index) {
-					// Initial view
-					var initial_view = (typeof jQuery(this).attr('data-view') != "undefined") ? jQuery(this).attr('data-view') : 'calendar';
-					if (initial_view == 'list') {
-						jQuery(this).find('.list-view').click();
-					}
-				});
-            }
-        });
+            // Create calendar
+            changedate('current', 'full');
+            changedate('current', 'compact');
+
+            jQuery('.tiva-events-calendar').each(function (index) {
+                // Initial view
+                var initial_view = (typeof jQuery(this).attr('data-view') != "undefined") ? jQuery(this).attr('data-view') : 'calendar';
+                if (initial_view == 'list') {
+                    jQuery(this).find('.list-view').click();
+                }
+            });
+        }
+    });
 //    }
 
     // Click - Calendar view btn
